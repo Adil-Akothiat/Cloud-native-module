@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const restaurantSchema = new mongoose.Schema({
+const RestaurantSchema = new mongoose.Schema({
     name: String,
     createAt: Date
 });
 
-module.exports = mongoose.model('restaurant', restaurantSchema);
+module.exports = mongoose.model('restaurant', RestaurantSchema);

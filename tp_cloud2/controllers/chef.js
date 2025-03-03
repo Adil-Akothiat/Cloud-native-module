@@ -1,0 +1,1 @@
+const CheckModel = require('../models/ChefModel');
