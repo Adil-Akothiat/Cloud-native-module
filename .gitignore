@@ -2,3 +2,12 @@
 /tp_cloud2/.env
 /tp_cloud1/node_modules/
 /tp_cloud2/node_modules/
+/tp_cloud4/auth-service/node_modules/
+/tp_cloud4/chef/node_modules/
+/tp_cloud4/react/restaurant_management/node_modules/
+/tp_cloud4/recette/node_modules/
+/tp_cloud4/restaurant/node_modules/
+/tp5_platform_cours/auth-service/node_modules/
+/tp5_platform_cours/course-service/node_modules/
+/tp5_platform_cours/student-service/node_modules/
+/tp5_platform_cours/teacher-service/node_modules/

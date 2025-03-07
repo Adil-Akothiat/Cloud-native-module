@@ -1,9 +1,11 @@
 const express = require('express');
 const Router = express.Router();
+const { authMiddleware } = require('../middlewares/authenticate');
+const { getAllChefs } = require('../controllers/chef');
 
 const response = (req, res, message)=>  res.send(message);
 // all
-Router.get('/all', (req, res)=> response(req, res, 'Retourne la liste de tous les chefs.'));
+Router.get('/all', authMiddleware, getAllChefs);
 // names
 Router.get('/names', (req, res)=> response(req, res, 'Retourne les noms des chefs'));
 // recettes

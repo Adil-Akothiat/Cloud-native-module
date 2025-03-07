@@ -1,30 +1,25 @@
 const UserModel = require('../models/UserModel');
 const { errorHandler } = require('../errorHandler/error');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 const register = (req, res)=> errorHandler(async ()=> {
-    const { username, password } = req.body;
-    if(!username || !password) {
-        throw new Error('Must Provide username & password to register');
-    }
-    if(username?.length == 0 || password?.length == 0) {
-        throw new Error('Username & Password are required');
-    }
+    const { email, nom, prenom, password } = req.body;
     // has password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const user = new UserModel({ username, password:hash });
+    const user = new UserModel({ email, nom, prenom, password:hash });
     await user.save();
     return res.status(200).json({ register: true });
 })(req, res);
 
 const login = (req, res)=> errorHandler(async ()=> {
-    const { username, password } = req.body;
-    if(!username || !password) {
+    const { email, password } = req.body;
+    if(!email || !password) {
         throw new Error('Username & Password are required');
     }
-    const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ email });
     if(!user) {
         throw new Error('Invalid username or password');
     }
@@ -32,7 +27,8 @@ const login = (req, res)=> errorHandler(async ()=> {
     if(!(await isValidPassword)) {
         throw new Error('Inavlid username or password');
     }
-    return res.status(200).json({ authenticate:true, token: 'aaa.bbb.ccc' });
+    const token = jwt.sign({ nom: user.nom, prenom: user.prenom }, process.env.JWT_SECRET, { expiresIn: '1m' });
+    return res.status(200).json({ authenticate:true, token: token });
 })(req, res);
 
 module.exports = {
